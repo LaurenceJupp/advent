@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-''' Advent of Code 2024 Day 21 '''
+''' https://adventofcode.com/2024/day/21 '''
 from functools import cache
 
 #INPUT = ('029A', '980A', '179A', '456A', '379A')

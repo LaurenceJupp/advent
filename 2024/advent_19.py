@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-''' Advent of Code 2024 Day 19 '''
+''' https://adventofcode.com/2024/day/21 '''
 from functools import cache
 from itertools import repeat
 from concurrent.futures import ProcessPoolExecutor
 
 INPUT = 'input_19.txt'
+CORES = 8
 
 def get_input():
     ''' Parse input file and return tuples of towels and patterns '''
@@ -21,8 +22,8 @@ def count(pat, towels):
 def main():
     ''' Run count() on each pattern and report count of non-zeros, and the sum '''
     towels, patterns = get_input()
-    with ProcessPoolExecutor(max_workers=8) as executor:
-        counts = tuple(executor.map(count, patterns, repeat(towels), chunksize=len(patterns)//8+1))
+    pool = ProcessPoolExecutor(max_workers=CORES)
+    counts = tuple(pool.map(count, patterns, repeat(towels), chunksize=len(patterns) // CORES + 1))
     print(f'Part 1: {sum(1 for x in counts if x)}\nPart 2: {sum(counts)}')
 
 main()
