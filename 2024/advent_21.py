@@ -4,10 +4,10 @@ from functools import cache
 
 #INPUT = ('029A', '980A', '179A', '456A', '379A')
 INPUT = ('341A', '480A', '286A', '579A', '149A')
+NUMPAD = 'X0A123456789'
+DIRPAD = '<v>X^A'
 # Coordinates of each key
-NUMMAP = {'0': (1,0), '1': (0,1), '2': (1,1), '3': (2,1), '4': (0,2), '5': (1,2),
-          '6': (2,2), '7': (0,3), '8': (1,3), '9': (2,3), 'A': (2,0)}
-DIRMAP = {'<': (0,0), 'v': (1,0), '>': (2,0), '^': (1,1), 'A': (2,1)}
+NUMMAP, DIRMAP = ({x: (y.index(x) % 3, y.index(x) // 3) for x in y} for y in (NUMPAD, DIRPAD))
 
 def get_sequences(start, end, missing):
     ''' Sequences of key-presses to get robot from start key to press end key '''
@@ -25,7 +25,7 @@ def get_total_length(sequence, num_levels, level=0):
     ''' Minimum number of key-presses for sequence through (num_levels - level) robots '''
     # Always start at 'A' - but it's not part of the sequence to enter
     seq = 'A' + sequence
-    return sum(get_length(seq[i], seq[i+1], num_levels, level) for i in range(len(seq) - 1))
+    return sum(get_length(seq[i-1], seq[i], num_levels, level) for i in range(1, len(seq)))
 
 @cache
 def get_length(old, new, num_levels, level):
