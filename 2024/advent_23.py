@@ -45,6 +45,7 @@ def main():
     ''' main '''
     valid_threes = set()
     password_length = 0
+    print(len(get_input().keys()))
     for first, others in get_input().items():
         computers = tuple(sorted(others + [first]))
         for three in combinations(computers, 3):

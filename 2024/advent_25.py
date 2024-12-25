@@ -4,34 +4,25 @@
 INPUT = 'input_25.txt'
 
 def get_input():
-    ''' Return keys and locks as hex numbers, distinguished by sign '''
+    ''' Return items as hex numbers '''
     with open(INPUT, 'r', encoding='utf-8') as input25:
         while item := input25.read(43).split():
             value = 0
-            for y in range(6):
+            for y in range(7):
                 for x in range(5):
-                    x_power = 16 ** x
-                    trans = f'{item[y][4-x]}{item[y+1][4-x]}'
-                    if trans == '#.':
-                        # lock
-                        value += y * x_power
-                    elif trans == '.#':
-                        # key
-                        value -= (5-y) * x_power
+                    if item[y][x] == '#':
+                        value += (1 << y) << (x * 7)
             yield value
 
 
 def main():
     ''' Read in locks and keys then add and check sums for digit overflows '''
-    all_items = tuple(get_input())
-    keys = set(-x for x in all_items if x < 0)
-    locks = set(x for x in all_items if x > 0)
-
+    all_items = set(get_input())
     total = 0
-    for key in keys:
-        for lock in locks:
-            if int(max(hex(key + lock)[2:]), 16) < 6:
+    for item in all_items:
+        for other in all_items:
+            if not item & other:
                 total += 1
-    print(f'Part 1: {total}')
+    print(f'Part 1: {total//2}')
 
 main()
