@@ -6,7 +6,7 @@ INPUT = 'input_25.txt'
 def get_input():
     ''' Return items as bitmasks '''
     with open(INPUT, 'r', encoding='utf-8') as input25:
-        while item := input25.read(43).replace('\n',''):
+        while item := input25.read(43):
             yield sum(1 << i for i, x in enumerate(item) if x == '#')
 
 def main():
