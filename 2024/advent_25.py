@@ -4,7 +4,7 @@
 INPUT = 'input_25.txt'
 
 def get_input():
-    ''' Return items as hex numbers '''
+    ''' Return items as bitmasks '''
     with open(INPUT, 'r', encoding='utf-8') as input25:
         while item := input25.read(43).split():
             yield sum((1 << y) << (x * 7) for y in range(7) for x in range(5) if item[y][x] == '#')
