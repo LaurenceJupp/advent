@@ -15,7 +15,7 @@ def linear_position(x, y):
 def main():
     ''' main '''
     code = START
-    for _ in range(linear_position(*INPUT) - 1):
+    for _ in range(1, linear_position(*INPUT)):
         code *= MULT
         code %= MODULO
 
